@@ -1,26 +1,75 @@
-from base64 import b64decode, b64encode
-from Crypto.Cipher import AES
-from Crypto.Util.Padding import pad,unpad
-from Crypto.Random import get_random_bytes
+import modes
 
-
+#TEXTO 1
 
 data = b"Bryann Diego Julio"
 
 #EJEMPLO CON MODO CBC
-key = get_random_bytes(16)
-cipher = AES.new(key, AES.MODE_CBC)
-ct_bytes = cipher.encrypt(pad(data, AES.block_size))
-iv = b64encode(cipher.iv).decode('utf-8')
-ct = b64encode(ct_bytes).decode('utf-8')
-result = iv,ct
-print(result)
+result = modes.EncryptCBC(data)
+print(result[1])
+print('Texto original: ',modes.DecryptCBC(result))
 
-try:
-    iv = b64decode(iv)
-    ct = b64decode(ct)
-    cipher = AES.new(key, AES.MODE_CBC, iv)
-    pt = unpad(cipher.decrypt(ct), AES.block_size)
-    print("The message was: ", pt)
-except:
-    print("Incorrect decryption")
+#EJEMPLO CON MODO CFB
+result = modes.EncryptCFB(data)
+print(result[1])
+print('Texto original: ',modes.DecryptCFB(result))
+
+#EJEMPLO CON MODO OFB
+
+result = modes.EncryptOFB(data)
+print(result[1])
+print('Texto original: ',modes.DecryptOFB(result))
+
+#EJEMPLO CON MODO CTR
+result = modes.EncryptCTR(data)
+print(result[1])
+print('Texto original: ',modes.DecryptCTR(result))
+
+
+#EJEMPLO 2
+data = b"El dia de hoy juan fue a la tienda por 4 panes."
+
+#EJEMPLO CON MODO CBC
+result = modes.EncryptCBC(data)
+print(result[1])
+print('Texto original: ',modes.DecryptCBC(result))
+
+#EJEMPLO CON MODO CFB
+result = modes.EncryptCFB(data)
+print(result[1])
+print('Texto original: ',modes.DecryptCFB(result))
+
+#EJEMPLO CON MODO OFB
+
+result = modes.EncryptOFB(data)
+print(result[1])
+print('Texto original: ',modes.DecryptOFB(result))
+
+#EJEMPLO CON MODO CTR
+result = modes.EncryptCTR(data)
+print(result[1])
+print('Texto original: ',modes.DecryptCTR(result))
+
+#EJEMPLO 3
+data = b"Las redes sociales son populares. 1234. "
+
+#EJEMPLO CON MODO CBC
+result = modes.EncryptCBC(data)
+print(result[1])
+print('Texto original: ',modes.DecryptCBC(result))
+
+#EJEMPLO CON MODO CFB
+result = modes.EncryptCFB(data)
+print(result[1])
+print('Texto original: ',modes.DecryptCFB(result))
+
+#EJEMPLO CON MODO OFB
+
+result = modes.EncryptOFB(data)
+print(result[1])
+print('Texto original: ',modes.DecryptOFB(result))
+
+#EJEMPLO CON MODO CTR
+result = modes.EncryptCTR(data)
+print(result[1])
+print('Texto original: ',modes.DecryptCTR(result))
