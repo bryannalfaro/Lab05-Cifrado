@@ -81,3 +81,8 @@ def DecryptCTR(result):
         return pt
     except:
         print("Incorrect decryption")
+
+def EncryptTextFile(key, text1, text2):
+    pass
+def DecryptTextFile(key,text1,text2):
+    pass
