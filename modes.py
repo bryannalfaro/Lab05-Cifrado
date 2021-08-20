@@ -3,8 +3,11 @@ from Crypto.Cipher import AES
 from Crypto.Util.Padding import pad,unpad
 from Crypto.Random import get_random_bytes
 
-def EncryptCBC(data):
-    key = get_random_bytes(16)
+def EncryptCBC(data, keys = None):
+    if not keys:
+        key = get_random_bytes(16)
+    else:
+        key = keys
     cipher = AES.new(key, AES.MODE_CBC)
     ct_bytes = cipher.encrypt(pad(data, AES.block_size))
     iv = b64encode(cipher.iv).decode('utf-8')
@@ -82,7 +85,28 @@ def DecryptCTR(result):
     except:
         print("Incorrect decryption")
 
-def EncryptTextFile(key, text1, text2):
-    pass
+def EncryptTextFile(key,text1, text2):
+    file = open(text1,'r')
+    texto =bytes(file.read(),'utf-8')
+    cifrado = EncryptCBC(texto,key)
+    f = open(text2,'w')
+    f.write(cifrado[0]+'\n')
+    f.write(cifrado[1]+'\n')
+
+    f.close()
+    file.close()
+
+
 def DecryptTextFile(key,text1,text2):
-    pass
+    result  = []
+    file = open(text1,'r')
+    for line in file.readlines():
+        result.append(line)
+
+    result.append(key)
+    descifrado = DecryptCBC(tuple(result))
+    f = open(text2,'w')
+    f.write(descifrado.decode('utf-8'))
+
+    f.close()
+    file.close()

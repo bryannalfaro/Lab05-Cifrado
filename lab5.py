@@ -1,3 +1,5 @@
+
+from Crypto.Random import get_random_bytes
 import modes
 
 #TEXTO 1
@@ -31,7 +33,7 @@ data = b"El dia de hoy juan fue a la tienda por 4 panes."
 
 #EJEMPLO CON MODO CBC
 result = modes.EncryptCBC(data)
-print(result[1])
+print('HEREEE',type(result[1]),type(result[2]),type(result[0]))
 print('Texto original: ',modes.DecryptCBC(result))
 
 #EJEMPLO CON MODO CFB
@@ -73,3 +75,13 @@ print('Texto original: ',modes.DecryptOFB(result))
 result = modes.EncryptCTR(data)
 print(result[1])
 print('Texto original: ',modes.DecryptCTR(result))
+
+
+#Encriptando archivos
+key = get_random_bytes(16)
+texto1 = 'texto.txt'
+texto2 = 'cifrado.enc'
+modes.EncryptTextFile(key,texto1,texto2)
+
+texto3 = 'descifrado.dec'
+modes.DecryptTextFile(key,texto2,texto3)
