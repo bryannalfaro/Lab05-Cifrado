@@ -54,9 +54,7 @@ def EncryptOFB(data):
     return result
 
 def DecryptOFB(result):
-
     try:
-
         iv = b64decode(result[0])
         ct = b64decode(result[1])
         cipher = AES.new(result[2], AES.MODE_OFB, iv=iv)
@@ -85,28 +83,25 @@ def DecryptCTR(result):
     except:
         print("Incorrect decryption")
 
-def EncryptTextFile(key,text1, text2):
+def EncryptTextFile(key, text1, text2):
     file = open(text1,'r')
-    texto =bytes(file.read(),'utf-8')
+    texto = bytes(file.read(),'utf-8')
     cifrado = EncryptCBC(texto,key)
     f = open(text2,'w')
     f.write(cifrado[0]+'\n')
     f.write(cifrado[1]+'\n')
-
     f.close()
     file.close()
 
 
-def DecryptTextFile(key,text1,text2):
+def DecryptTextFile(key, text1, text2):
     result  = []
     file = open(text1,'r')
     for line in file.readlines():
         result.append(line)
-
     result.append(key)
     descifrado = DecryptCBC(tuple(result))
     f = open(text2,'w')
     f.write(descifrado.decode('utf-8'))
-
     f.close()
     file.close()
